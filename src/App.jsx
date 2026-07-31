@@ -4,15 +4,13 @@ export default function App() {
       id: 1,
       name: "Classic Hoodie",
       price: "$49.99",
-      image:
-        "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=500",
+      image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=500",
     },
     {
       id: 2,
       name: "Denim Jacket",
       price: "$79.99",
-      image:
-        "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?w=500",
+      image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=500",
     },
     {
       id: 3,
