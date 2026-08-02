@@ -1,0 +1,53 @@
+import {FiInfo} from "react-icons/fi";
+import InputField from "../components/InputField";
+import Label from "../components/Label";
+import SelectField from "../components/SelectField";
+
+function BasicInfo(){
+    return(
+        <div className="border border-gray-100 p-5 bg-white rounded-md">
+            <div className="flex">
+                <FiInfo className="m-2 text-green-700"/>
+                <h3 className="text-xl font-playfair text-green-700">Basic Information</h3>
+            </div>
+            <div className="flex flex-col p-4">
+                <Label label="Product Name"/>
+                <InputField 
+                    type = "text"
+                    placeholder = "e.g. Silk Organza Evening Grown"
+                />
+
+                <Label label="Description"/>
+                <textarea className="border border-gray-400 outline-none p-3 "
+                placeholder="Describe the craftmanship, fabric details, and hertigate..."/>
+            </div>
+            <div className="md:flex gap-4 p-4">
+                <div className="w-full">
+                    <Label label="Brand"/> 
+                    <SelectField
+                    placeholder="Select Brand"
+                    options={["Zara", "H&M", "Gucci", "Nike"]}
+                    />
+                </div>
+                <div className="w-full">
+                    <Label label="Category"/>
+                    <SelectField 
+                        placeholder="Select a category"
+                        options={[
+                            "Dresses",
+                            "Tops",
+                            "T-Shirts",
+                            "Jeans",
+                            "Skirts",
+                            "Pants",
+                            "Jackets",
+                            "Hoodies",
+                            ]}
+                    />
+                </div>
+            </div>
+        </div>
+    )
+}
+
+export default BasicInfo;

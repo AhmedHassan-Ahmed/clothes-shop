@@ -7,7 +7,7 @@ function Buttons({label, variant = "primary"}){
     return(
         <button
             className={`
-                w-fit 
+                w-full md:w-fit
                 px-3 py-2 text-sm
                 transition duration-300
                 ${styles[variant]}
