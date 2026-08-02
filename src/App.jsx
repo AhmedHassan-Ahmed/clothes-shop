@@ -1,6 +1,8 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import CreateProduct from "./pages/CreateProduct";
 import Home from "./pages/Home";
+import './index.css'
+
 
 function App() {
   return (

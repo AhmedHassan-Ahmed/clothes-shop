@@ -1,5 +1,9 @@
+import Navbar from "../components/Navbar";
+
 function CreateProduct() {
-  return ;
+  return (
+    <Navbar />
+  );
 }
 
 export default CreateProduct;
