@@ -36,6 +36,7 @@ const ProductDetails = () => {
       .get(`/products/${id}`)
       .then((res) => {
         setProduct(res.data.data);
+        console.log(res.data.data);
         setSelectedImage(res.data.data.image);
       })
       .catch((err) => console.log(err))
