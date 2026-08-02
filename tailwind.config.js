@@ -2,11 +2,18 @@
 export default {
   content: [
      "./index.html",
-    "./src/**/*.{js,ts,jsx,tsx}"
+    "./src/**/*.{js,ts,jsx,tsx}",
   ],
+
   theme: {
-    extend: {},
+    extend: {  
+        fontFamily: {
+            figtree: ["Figtree", "sans-serif"],
+            archivo: ["Archivo Black", "sans-serif"],    },
   },
-  plugins: [],
+  },
+  plugins: [
+
+  ],
 }
 
