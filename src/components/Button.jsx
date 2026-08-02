@@ -5,9 +5,16 @@ function Buttons({label, variant = "primary"}){
     };
 
     return(
-        <button className={`flex px-4 py-2 text-sm mt-10 ${styles[variant]} 
-             transition`}>
-            {label}</button>
+        <button
+            className={`
+                w-fit 
+                px-3 py-2 text-sm
+                transition duration-300
+                ${styles[variant]}
+            `}
+        >
+            {label}
+        </button>
     )
 }
 

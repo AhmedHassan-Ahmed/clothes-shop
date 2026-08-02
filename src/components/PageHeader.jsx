@@ -2,8 +2,15 @@ import Button from "../components/Button";
 
 function PageHeader({page,title,desc}){
     return(
-        <div className="flex justify-between items-center ">
-            <div className="m-12 font-sans text-md">
+        <div className="
+                    flex flex-col 
+                    md:flex-row 
+                    justify-between items-start 
+                    gap-8
+                    mt-10 mx-10
+                    p-3 
+                    ">
+            <div className=" font-sans text-md">
                 <div className="">
                     <span className="">Inventory</span>
                     <span className=""> › </span>
@@ -16,16 +23,23 @@ function PageHeader({page,title,desc}){
                     {desc}
                 </div>
             </div>
-            <div className="flex gap-3 mx-16 mt-10">
-                <Button
-                    label="Cancel"
-                    variant="outline"
-                />
 
-                <Button
-                    label="Add New Product"
-                    variant="primary"
-                />
+                <div className="
+                    flex flex-col 
+                    md:flex-row 
+                    gap-3
+                    w-full 
+                    md:w-auto md:mt-16
+                ">
+                    <Button
+                        label="Cancel"
+                        variant="outline"
+                    />
+
+                    <Button
+                        label="Save Product"
+                        variant="primary"
+                    />
             </div>
         </div>
     )
