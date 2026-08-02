@@ -9,8 +9,10 @@ export default {
     extend: {  
         fontFamily: {
             figtree: ["Figtree", "sans-serif"],
-            archivo: ["Archivo Black", "sans-serif"],    },
-  },
+            archivo: ["Archivo Black", "sans-serif"], 
+            playfair:["Playfair Display", "serif"] ,
+         },
+    },
   },
   plugins: [
 

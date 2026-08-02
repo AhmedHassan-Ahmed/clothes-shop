@@ -4,7 +4,7 @@ function Navbar(){
     return(
         <>
             <div className="w-full bg-white border shadow-md flex justify-between p-5 ">
-                <div className="text-green-700 font-figtree font-bold text-lg">
+                <div className="text-green-700 font-archivo font-bold text-lg">
                     <span>Haute Admin</span>
                 </div>
 
