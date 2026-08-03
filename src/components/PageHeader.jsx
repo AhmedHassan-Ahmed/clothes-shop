@@ -7,8 +7,7 @@ function PageHeader({page,title,desc}){
                     md:flex-row 
                     justify-between items-start 
                     gap-8
-                    mt-10 mx-10
-                    p-3 
+                    p-3 m-6
                     ">
             <div className=" font-sans text-md">
                 <div className="">
@@ -16,7 +15,7 @@ function PageHeader({page,title,desc}){
                     <span className=""> › </span>
                     <span className="">{page}</span>
                 </div>
-                <div className="font-playfair text-3xl py-3">
+                <div className="font-playfair text-3xl py-3 text-green-700">
                     {title}
                 </div>
                 <div className="">

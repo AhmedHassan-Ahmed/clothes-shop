@@ -10,7 +10,7 @@ function Buttons({ label, variant = "primary", onClick, type = "button" }) {
             type={type}
             onClick={onClick}
             className={`
-                w-fit 
+                w-full md:w-fit
                 px-3 py-2 text-sm
                 rounded-lg
                 transition duration-300

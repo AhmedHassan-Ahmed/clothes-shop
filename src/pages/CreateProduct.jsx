@@ -4,6 +4,10 @@ import PageHeader from "../components/PageHeader";
 import Input from "../components/Input";
 import Buttons from "../components/Button";
 import { useProductContext } from "../context/ProductContext";
+import BasicInfo from "../components/BasicInfo";
+import Pricing from "../components/Pricing";
+import Varients from "../components/Varients";
+import MediaUpload from "../components/MediaUpload";
 
 function CreateProduct() {
   const { addProduct } = useProductContext();
@@ -34,42 +38,32 @@ function CreateProduct() {
     });
   };
   return (
-    <div>
-      <Navbar />
-      <PageHeader 
-        page="Add new Product"
-        title="Product Creation"
-        desc="Refine your luxury catalog with detailed specifications and high-end imagery."
-      />
-      <div className="max-w-xl mx-auto mt-10">
-        <form 
-          onSubmit={handleSubmit}
-          className="space-y-4"
-        >
-          <Input
-            name="name"
-            placeholder="Product Name"
-            value={product.name}
-            onChange={handleChange}
+    <div className="">
+          <PageHeader 
+              page = "Add new Product"
+              title = "Product Creation"
+              desc = "Refine your luxury catalog with detailed specifications and high-end imagery."
           />
-          <Input
-            name="price"
-            type="number"
-            placeholder="Price"
-            value={product.price}
-            onChange={handleChange}
-          />
-          <Input
-            name="image"
-            placeholder="Image URL"
-            value={product.image}
-            onChange={handleChange}
-          />
-          <Buttons
-            label="Create Product"
-            type="submit"
-          />
-        </form>
+           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 m-8">
+
+              <div className="flex flex-col gap-6 lg:col-span-2">
+
+                <BasicInfo />
+                <Pricing />
+
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 gap-6">
+                  <Varients />
+                  <div className="lg:hidden">
+                    <MediaUpload />
+                  </div>
+              </div>
+
+            </div>
+
+        <div className="hidden lg:block mx-0">
+          <MediaUpload />
+        </div>
+
       </div>
     </div>
   );

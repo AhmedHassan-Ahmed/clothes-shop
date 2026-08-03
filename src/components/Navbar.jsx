@@ -5,7 +5,7 @@ function Navbar() {
     const [open, setOpen] = useState(false);
 
     return (
-        <div className="w-full bg-white border shadow-md p-5">
+        <div className="w-full bg-white border shadow-md p-5 fixed relative">
 
             <div className="flex justify-between items-center">
 

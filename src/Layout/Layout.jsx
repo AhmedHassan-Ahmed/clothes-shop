@@ -12,6 +12,10 @@ const Layout = () => {
           <Outlet />
         </main>
       </div>
+
+      <main className="max-w-7xl mx-auto px-5 py-8 bg-stone-100">
+        <Outlet />
+      </main>
     </>
   );
 };
