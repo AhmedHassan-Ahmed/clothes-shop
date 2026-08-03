@@ -6,12 +6,15 @@ import ProductCard from "../components/ProductCard";
 import Modal from "../components/Modal";
 import Input from "../components/Input";
 import Pagination from "../components/Pagination";
-import Buttons from "../components/Button";
+import Button from "../components/Button";
+import PageHeader from "../components/PageHeader";
+import { useNavigate } from "react-router-dom";
 
 const ProductManagement = () => {
     const { products, loading, error, addProduct } = useProductContext();
     const [openModal, setOpenModal] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
+    const navigate = useNavigate();
     const productsPerPage = 6;
     const [product, setProduct] = useState({
         name: "",
@@ -57,19 +60,24 @@ const ProductManagement = () => {
     );
     return (
         <section className="space-y-6">
-            <div className="flex justify-between items-center">
-                <div>
-                <h1 className="text-3xl font-bold text-green-800">
-                    Products Management
-                </h1>
-                <p className="text-gray-500">
-                    Manage your inventory
-                </p>
-                </div>
-                <Buttons
-                    label="+ Add Product"
-                    onClick={() => setOpenModal(true)}
+            <div className="md:flex justify-between">
+                <PageHeader 
+                    page = "Products"
+                    title = "Products Management"
+                    desc = "Manage your inventory"
                 />
+                <div className="
+                    flex flex-col 
+                    md:flex-row 
+                    gap-3
+                    w-full 
+                    md:w-auto md:mt-16
+                ">
+                    <Button
+                        label="+ Add Product"
+                        onClick={() => navigate("/create-product")}
+                    />
+                    </div>
             </div>
             <h2 className="text-xl font-bold text-green-800">
                 Total Products : {products.length}
@@ -124,7 +132,7 @@ const ProductManagement = () => {
                         value={product.image}
                         onChange={handleChange}
                     />
-                    <Buttons
+                    <Button
                         label="Add Product"
                         type="submit"
                     />

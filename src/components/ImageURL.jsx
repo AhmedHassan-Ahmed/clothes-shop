@@ -10,7 +10,7 @@ function ImageURL({ formData, setFormData }) {
         onChange={(e) =>
           setFormData({ ...formData, image: e.target.value })
         }
-        className="w-full mt-2 p-2 border rounded-md"
+        className="w-full mt-2 p-2 border rounded-md outline-none"
       />
 
       {formData.image && (

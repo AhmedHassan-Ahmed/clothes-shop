@@ -25,25 +25,7 @@ function PageHeader({page,title,desc, onSave}){
                 </div>
             </div>
 
-                <div className="
-                    flex flex-col 
-                    md:flex-row 
-                    gap-3
-                    w-full 
-                    md:w-auto md:mt-16
-                ">
-                    <Button
-                        label="Cancel"
-                        variant="outline"
-                        onClick={() => navigate("/")}
-                    />
-
-                    <Button
-                        label="Save Product"
-                        variant="primary"
-                        onClick = {onSave}
-                    />
-            </div>
+                
         </div>
     )
 }
