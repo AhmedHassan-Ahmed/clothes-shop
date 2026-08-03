@@ -9,13 +9,9 @@ const Layout = () => {
         <div className="flex">
           <Sidebar />
           <main className="max-w-7xl mx-auto px-5 py-8">
-          <Outlet />
-        </main>
-      </div>
-
-      <main className="max-w-7xl mx-auto px-5 py-8 bg-stone-100">
-        <Outlet />
-      </main>
+            <Outlet />
+          </main>
+        </div>
     </>
   );
 };
