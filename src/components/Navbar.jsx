@@ -5,12 +5,12 @@ function Navbar() {
     const [open, setOpen] = useState(false);
 
     return (
-        <div className="w-full bg-white border shadow-md p-5 fixed relative">
+        <div className="w-full bg-white border shadow p-5 fixed relative">
 
             <div className="flex justify-between items-center">
 
                 <div className="text-green-700 font-archivo font-bold text-lg">
-                    Haute Admin
+                    Clothes Shop
                 </div>
 
                 <div className="hidden md:flex gap-6 text-gray-800 transition-all duration-500">

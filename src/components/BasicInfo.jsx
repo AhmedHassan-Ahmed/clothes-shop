@@ -5,7 +5,7 @@ import SelectField from "../components/SelectField";
 
 function BasicInfo({ formData, setFormData }){
     return(
-        <div className="border border-gray-100 p-5 bg-white rounded-md">
+        <div className="border border-gray-100 p-5 bg-white rounded-md shadow">
             <div className="flex">
                 <FiInfo className="m-2 text-green-700"/>
                 <h3 className="text-xl font-playfair text-green-700">Basic Information</h3>
@@ -35,14 +35,14 @@ function BasicInfo({ formData, setFormData }){
             <div className="md:flex gap-4 p-4">
                 <div className="w-full">
                     <Label label="Brand"/> 
-                    <textarea
-                        className="border border-gray-400 outline-none p-3"
-                        placeholder="Describe the craftmanship..."
-                        value={formData.description}
-                        onChange={(e) =>
-                            setFormData({ ...formData, description: e.target.value })
+                    <SelectField
+                        placeholder="Select Brand"
+                        options={["Zara", "H&M", "Gucci", "Nike"]}
+                        value={formData.brand}
+                        onChange={(value) =>
+                        setFormData({ ...formData, brand: value })
                         }
-                        />
+                    />
                 </div>
                 <div className="w-full">
                     <Label label="Category"/>
@@ -59,9 +59,7 @@ function BasicInfo({ formData, setFormData }){
                             "Hoodies",
                         ]}
                         value={formData.category}
-                        onChange={(value) =>
-                            setFormData({ ...formData, category: value })
-                        }
+                        onChange={(value) => setFormData({ ...formData, category: value })}
                         />
                 </div>
             </div>

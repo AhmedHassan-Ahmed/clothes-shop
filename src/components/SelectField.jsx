@@ -1,8 +1,7 @@
 import { useState } from "react";
 
-function SelectField({ placeholder, options = [] }) {
+function SelectField({ placeholder, options = [], value, onChange }) {
   const [open, setOpen] = useState(false);
-  const [selected, setSelected] = useState("");
 
   return (
     <div className="w-full relative my-2">
@@ -11,7 +10,7 @@ function SelectField({ placeholder, options = [] }) {
         onClick={() => setOpen(!open)}
         className="w-full border border-gray-400 p-3 rounded-md cursor-pointer bg-white"
       >
-        {selected || placeholder}
+        {value || placeholder}
       </div>
 
       {open && (
@@ -20,7 +19,7 @@ function SelectField({ placeholder, options = [] }) {
             <li
               key={index}
               onClick={() => {
-                setSelected(item);
+                onChange(item);  
                 setOpen(false);
               }}
               className="p-2 hover:bg-gray-100 cursor-pointer"

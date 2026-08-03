@@ -1,13 +1,15 @@
 import Button from "../components/Button";
+import { useNavigate } from "react-router-dom";
 
-function PageHeader({page,title,desc}){
+function PageHeader({page,title,desc, onSave}){
+    const navigate = useNavigate();
     return(
         <div className="
                     flex flex-col 
                     md:flex-row 
                     justify-between items-start 
-                    gap-8
-                    p-3 m-6
+                    gap-6
+                    p-1 
                     ">
             <div className=" font-sans text-md">
                 <div className="">
@@ -33,11 +35,13 @@ function PageHeader({page,title,desc}){
                     <Button
                         label="Cancel"
                         variant="outline"
+                        onClick={() => navigate("/")}
                     />
 
                     <Button
                         label="Save Product"
                         variant="primary"
+                        onClick = {onSave}
                     />
             </div>
         </div>
