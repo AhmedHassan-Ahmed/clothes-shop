@@ -4,8 +4,16 @@ import BasicInfo from "../components/BasicInfo";
 import Pricing from "../components/Pricing";
 import Varients from "../components/Varients";
 import MediaUpload from "../components/MediaUpload";
+import { useState } from "react";
+
 
 function CreateProduct() {
+  const [formData, setFormData] = useState({
+    name: "",
+    price: "",
+    variants: [],
+    images: [],
+  });
   return (
     <div className="">
           <PageHeader 
@@ -17,20 +25,20 @@ function CreateProduct() {
 
               <div className="flex flex-col gap-6 lg:col-span-2">
 
-                <BasicInfo />
-                <Pricing />
+                <BasicInfo formData={formData} setFormData={setFormData} />
+                <Pricing formData={formData} setFormData={setFormData} />
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 gap-6">
-                  <Varients />
+                  <Varients formData={formData} setFormData={setFormData} />
                   <div className="lg:hidden">
-                    <MediaUpload />
+                    <MediaUpload formData={formData} setFormData={setFormData} />
                   </div>
               </div>
 
             </div>
 
         <div className="hidden lg:block mx-0">
-          <MediaUpload />
+          <MediaUpload formData={formData} setFormData={setFormData} />
         </div>
 
       </div>

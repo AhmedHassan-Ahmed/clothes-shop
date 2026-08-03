@@ -3,7 +3,7 @@ import InputField from "../components/InputField";
 import Label from "../components/Label";
 import SelectField from "../components/SelectField";
 
-function BasicInfo(){
+function BasicInfo({ formData, setFormData }){
     return(
         <div className="border border-gray-100 p-5 bg-white rounded-md">
             <div className="flex">
@@ -13,21 +13,36 @@ function BasicInfo(){
             <div className="flex flex-col p-4">
                 <Label label="Product Name"/>
                 <InputField 
-                    type = "text"
-                    placeholder = "e.g. Silk Organza Evening Grown"
-                />
+                    type="text"
+                    placeholder="e.g. Silk Organza Evening Grown"
+                    value={formData.name}
+                    onChange={(e) =>
+                        setFormData({ ...formData, name: e.target.value })
+                    }
+                    />
 
                 <Label label="Description"/>
-                <textarea className="border border-gray-400 outline-none p-3 "
-                placeholder="Describe the craftmanship, fabric details, and hertigate..."/>
+                <textarea
+                    className="border border-gray-400 outline-none p-3"
+                    placeholder="Describe the craftmanship..."
+                    value={formData.description}
+                    onChange={(e) =>
+                        setFormData({ ...formData, description: e.target.value })
+                    }
+                    />
             </div>
+
             <div className="md:flex gap-4 p-4">
                 <div className="w-full">
                     <Label label="Brand"/> 
-                    <SelectField
-                    placeholder="Select Brand"
-                    options={["Zara", "H&M", "Gucci", "Nike"]}
-                    />
+                    <textarea
+                        className="border border-gray-400 outline-none p-3"
+                        placeholder="Describe the craftmanship..."
+                        value={formData.description}
+                        onChange={(e) =>
+                            setFormData({ ...formData, description: e.target.value })
+                        }
+                        />
                 </div>
                 <div className="w-full">
                     <Label label="Category"/>
@@ -42,8 +57,12 @@ function BasicInfo(){
                             "Pants",
                             "Jackets",
                             "Hoodies",
-                            ]}
-                    />
+                        ]}
+                        value={formData.category}
+                        onChange={(value) =>
+                            setFormData({ ...formData, category: value })
+                        }
+                        />
                 </div>
             </div>
         </div>
