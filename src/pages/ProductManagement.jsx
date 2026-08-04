@@ -3,7 +3,6 @@ import { useProductContext } from "../context/ProductContext";
 import Loader from "../components/Loader";
 import ErrorBanner from "../components/ErrorBanner";
 import ProductCard from "../components/ProductCard";
-import Modal from "../components/Modal";
 import Input from "../components/Input";
 import Pagination from "../components/Pagination";
 import Button from "../components/Button";
@@ -61,10 +60,10 @@ const ProductManagement = () => {
     return (
         <section className="space-y-6">
             <div className="md:flex justify-between">
-                <PageHeader 
-                    page = "Products"
-                    title = "Products Management"
-                    desc = "Manage your inventory"
+                <PageHeader
+                    page="Products"
+                    title="Products Management"
+                    desc="Manage your inventory"
                 />
                 <div className="
                     flex flex-col 
@@ -77,7 +76,7 @@ const ProductManagement = () => {
                         label="+ Add Product"
                         onClick={() => navigate("/create-product")}
                     />
-                    </div>
+                </div>
             </div>
             <h2 className="text-xl font-bold text-green-800">
                 Total Products : {products.length}
@@ -93,11 +92,11 @@ const ProductManagement = () => {
                 className="w-full md:w-80 border rounded-lg px-4 py-3 mb-6"
             />
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                {currentProducts.map((product)=>(
-                <ProductCard
-                    key={product.id}
-                    product={product}
-                />
+                {currentProducts.map((product) => (
+                    <ProductCard
+                        key={product.id}
+                        product={product}
+                    />
                 ))}
             </div>
             <Pagination
@@ -105,39 +104,7 @@ const ProductManagement = () => {
                 totalPages={totalPages}
                 onPageChange={setCurrentPage}
             />
-            <Modal
-                isOpen={openModal}
-                onClose={() => setOpenModal(false)}
-            >
-                <form
-                    onSubmit={handleSubmit}
-                    className="space-y-4"
-                >
-                    <Input
-                        name="name"
-                        placeholder="Product Name"
-                        value={product.name}
-                        onChange={handleChange}
-                    />
-                    <Input
-                        name="price"
-                        type="number"
-                        placeholder="Price"
-                        value={product.price}
-                        onChange={handleChange}
-                    />
-                    <Input
-                        name="image"
-                        placeholder="Image URL"
-                        value={product.image}
-                        onChange={handleChange}
-                    />
-                    <Button
-                        label="Add Product"
-                        type="submit"
-                    />
-                </form>
-            </Modal>
+
         </section>
     );
 };
