@@ -12,8 +12,11 @@ import {
   Boxes,
   ShieldCheck,
 } from "lucide-react";
+import { useProductContext } from "../context/useProductContext";
 
 const ProductDetails = () => {
+  const { deleteProduct } = useProductContext();
+
   const { id } = useParams();
   const navigate = useNavigate();
 
@@ -23,6 +26,8 @@ const ProductDetails = () => {
   const [selectedImage, setSelectedImage] = useState("");
 
   const colors = ["#111827", "#065f46", "#4338CA", "#991B1B"];
+
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   const sizes = ["XS", "S", "M", "L"];
 
@@ -71,14 +76,16 @@ const ProductDetails = () => {
 
   const oldPrice = (product.price * 1.25).toFixed(2);
 
-const handleDelete = async () => {
-  try {
-    await api.delete(`/products/${id}`);
-    navigate("/products");
-  } catch (error) {
-    console.log(error);
-  }
-};
+  const handleDelete = async () => {
+    try {
+      await deleteProduct(id);
+
+      setShowDeleteModal(false);
+      navigate("/products");
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <div className="max-w-7xl mx-auto px-5 lg:px-8 py-8">
@@ -97,7 +104,7 @@ const handleDelete = async () => {
             Back To List
           </button>
 
-          <button 
+          <button
             onClick={() => navigate(`/edit-product/${id}`)}
             className="bg-orange-600 text-white rounded-lg px-4 py-2 flex items-center gap-2 hover:bg-orange-700"
           >
@@ -105,8 +112,8 @@ const handleDelete = async () => {
             Edit Product
           </button>
 
-          <button 
-            onClick={handleDelete}
+          <button
+            onClick={() => setShowDeleteModal(true)}
             className="border rounded-lg p-2 hover:bg-red-50"
           >
             <Trash2 className="text-red-500" size={18} />
@@ -390,7 +397,7 @@ const handleDelete = async () => {
           </div>
 
           <div className="grid sm:grid-cols-2 gap-4 mt-10">
-            <button className="bg-emerald-700 hover:bg-emerald-800 transition text-white rounded-xl py-4 font-semibold">
+            <button     onClick={() => navigate(`/edit-product/${id}`)} className="bg-emerald-700 hover:bg-emerald-800 transition text-white rounded-xl py-4 font-semibold">
               Update Product
             </button>
 
@@ -403,6 +410,36 @@ const handleDelete = async () => {
           </div>
         </div>
       </div>
+      {showDeleteModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
+          <div className="bg-white rounded-xl p-6 w-[400px] shadow-xl">
+            <h2 className="text-2xl font-bold mb-3 text-red-600">
+              Delete Product
+            </h2>
+
+            <p className="text-gray-600">
+              Are you sure you want to delete
+              <span className="font-semibold"> {product.name}</span>?
+            </p>
+
+            <div className="flex justify-end gap-3 mt-6">
+              <button
+                onClick={() => setShowDeleteModal(false)}
+                className="px-4 py-2 border rounded-lg hover:bg-gray-100"
+              >
+                Cancel
+              </button>
+
+              <button
+                onClick={handleDelete}
+                className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700"
+              >
+                Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

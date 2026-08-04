@@ -3,16 +3,17 @@ import PageHeader from "../components/PageHeader";
 import BasicInfo from "../components/BasicInfo";
 import Pricing from "../components/Pricing";
 import ImageURL from "../components/ImageURL";
-import { createProduct } from "../api/products";
 import Button from "../components/Button";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import { useProductContext } from "../context/useProductContext";
 
 function CreateProduct() {
-    const navigate = useNavigate();
-    const [error, setError] = useState("");
-    const [success, setSuccess] = useState("");
-    const [formData, setFormData] = useState({
+  const { addProduct } = useProductContext();
+
+  const navigate = useNavigate();
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
+  const [formData, setFormData] = useState({
     name: "",
     description: "",
     brand: "",
@@ -21,7 +22,7 @@ function CreateProduct() {
     stock: "",
     image: "",
   });
-  
+
   const handleSubmit = async () => {
     try {
       setError("");
@@ -44,14 +45,15 @@ function CreateProduct() {
         stock: formData.stock ? Number(formData.stock) : 0,
         image: formData.image || "https://via.placeholder.com/150",
       };
-      
-      const res = await createProduct(formattedData);
+
+      await addProduct(formattedData);
 
       setSuccess("Product added successfully");
 
-        setTimeout(() => {
-          setSuccess("");
-        }, 3000);
+      setTimeout(() => {
+        setSuccess("");
+        navigate("/products");
+      }, 2200);
 
       setFormData({
         name: "",
@@ -62,71 +64,64 @@ function CreateProduct() {
         stock: "",
         image: "",
       });
-
     } catch (err) {
       setError(err.response?.data?.message || "Something went wrong");
     }
   };
 
   return (
-    <div className="">
-      <div className="md:flex justify-between">
-          <PageHeader 
-              page = "Add new Product"
-              title = "Product Creation"
-              desc = "Refine your luxury catalog with detailed specifications and high-end imagery."
-              onSave ={handleSubmit}
+    <div className="space-y-8 p-6 lg:p-8">
+      <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+        <PageHeader
+          page="Add New Product"
+          title="Product Creation"
+          desc="Refine your luxury catalog with detailed specifications and high-end imagery."
+        />
+
+        <div className="flex flex-col gap-3 sm:flex-row">
+          <Button
+            label="Cancel"
+            variant="outline"
+            onClick={() => navigate("/")}
           />
-          <div className="
-                    flex flex-col 
-                    md:flex-row 
-                    gap-3
-                    w-full 
-                    md:w-auto md:mt-16
-                ">
-                    <Button
-                        label="Cancel"
-                        variant="outline"
-                        onClick={() => navigate("/")}
-                    />
 
-                    <Button
-                        label="Save Product"
-                        variant="primary"
-                        onClick = {handleSubmit}
-                    />
-            </div>
-            </div>
-          {error && (
-            <div className="bg-red-100 text-red-700 p-3 rounded-md mx-2 mt-2">
-              {error}
-            </div>
-          )}
+          <Button
+            label="Save Product"
+            variant="primary"
+            onClick={handleSubmit}
+          />
+        </div>
+      </div>
 
-          {success && (
-            <div className="bg-green-100 text-green-700 p-3 rounded-md mx-2 mt-2">
-              {success}
-            </div>
-          )}
-           <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 mt-2">
+      {error && (
+        <div className="rounded-xl border border-red-200 bg-red-50 px-5 py-4 text-red-700 shadow-sm">
+          {error}
+        </div>
+      )}
 
-              <div className="flex flex-col gap-6 lg:col-span-2">
+      {success && (
+        <div className="rounded-xl border border-green-200 bg-green-50 px-5 py-4 text-green-700 shadow-sm">
+          {success}
+        </div>
+      )}
 
-                <BasicInfo formData={formData} setFormData={setFormData} />
-                <Pricing formData={formData} setFormData={setFormData} />
+      <div className="grid grid-cols-1 gap-8 xl:grid-cols-3">
+        <div className="space-y-6 xl:col-span-2">
+          <BasicInfo formData={formData} setFormData={setFormData} />
 
-               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 gap-6">
-                  <div className="lg:hidden">
-                    <ImageURL formData={formData} setFormData={setFormData} />                    </div>
-                </div>
+          <Pricing formData={formData} setFormData={setFormData} />
 
-              </div>
+          <div className="xl:hidden">
+            <ImageURL formData={formData} setFormData={setFormData} />
+          </div>
+        </div>
 
-              <div className="hidden lg:block mx-0">
-                    <ImageURL formData={formData} setFormData={setFormData} />   
-               </div>
-
-              </div>
+        <div className="hidden xl:block">
+          <div className="sticky top-28">
+            <ImageURL formData={formData} setFormData={setFormData} />
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

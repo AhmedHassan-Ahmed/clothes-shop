@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useProductContext } from "../context/ProductContext";
+import { useProductContext } from "../context/useProductContext";
 import Loader from "../components/Loader";
 import ErrorBanner from "../components/ErrorBanner";
 import ProductCard from "../components/ProductCard";
@@ -10,104 +10,87 @@ import PageHeader from "../components/PageHeader";
 import { useNavigate } from "react-router-dom";
 
 const ProductManagement = () => {
-    const { products, loading, error, addProduct } = useProductContext();
-    const [openModal, setOpenModal] = useState(false);
-    const [currentPage, setCurrentPage] = useState(1);
-    const navigate = useNavigate();
-    const productsPerPage = 6;
-    const [product, setProduct] = useState({
-        name: "",
-        price: "",
-        image: "",
-        category: "",
-        stock: 0,
-        description: ""
-    });
-    const [search, setSearch] = useState("");
-    const handleChange = (e) => {
-        setProduct({
-            ...product,
-            [e.target.name]: e.target.value
-        });
-    };
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        await addProduct(product);
-        setProduct({
-            name: "",
-            price: "",
-            image: "",
-            category: "",
-            stock: 0,
-            description: ""
-        });
-        setOpenModal(false);
-    };
-    if (loading) return <Loader />;
-    if (error) return <ErrorBanner message={error} />;
-    const filteredProducts = products.filter((product) =>
-        (product.name || "").toLowerCase().includes(search.toLowerCase())
-    );
-    const indexOfLastProduct = currentPage * productsPerPage;
-    const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
-    const currentProducts = filteredProducts.slice(
-        indexOfFirstProduct,
-        indexOfLastProduct
-    );
-    const totalPages = Math.ceil(
-        filteredProducts.length / productsPerPage
-    );
-    return (
-        <section className="space-y-6">
-            <div className="md:flex justify-between">
-                <PageHeader
-                    page="Products"
-                    title="Products Management"
-                    desc="Manage your inventory"
-                />
-                <div className="
-                    flex flex-col 
-                    md:flex-row 
-                    gap-3
-                    w-full 
-                    md:w-auto md:mt-16
-                ">
-                    <Button
-                        label="+ Add Product"
-                        onClick={() => navigate("/create-product")}
-                    />
-                </div>
-            </div>
-            <h2 className="text-xl font-bold text-green-800">
-                Total Products : {products.length}
-            </h2>
-            <input
-                type="text"
-                placeholder="Search products..."
-                value={search}
-                onChange={(e) => {
-                    setSearch(e.target.value)
-                    setCurrentPage(1);
-                }}
-                className="w-full md:w-80 border rounded-lg px-4 py-3 mb-6"
-            />
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                {currentProducts.map((product) => (
-                    <ProductCard
-                        key={product.id}
-                        product={product}
-                    />
-                ))}
-            </div>
-            <Pagination
-                currentPage={currentPage}
-                totalPages={totalPages}
-                onPageChange={setCurrentPage}
-            />
+  const { products, loading, error } = useProductContext();
+  const [currentPage, setCurrentPage] = useState(1);
+  const navigate = useNavigate();
+  const productsPerPage = 8;
+  const [search, setSearch] = useState("");
+  if (loading) return <Loader />;
+  if (error) return <ErrorBanner message={error} />;
 
-        </section>
-    );
+  const filteredProducts = products.filter((product) =>
+    (product.name || "").toLowerCase().includes(search.toLowerCase()),
+  );
+  const indexOfLastProduct = currentPage * productsPerPage;
+  const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
+  const currentProducts = filteredProducts.slice(
+    indexOfFirstProduct,
+    indexOfLastProduct,
+  );
+  const totalPages = Math.ceil(filteredProducts.length / productsPerPage);
+  return (
+    <section className="space-y-8 p-8">
+      <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
+        <PageHeader
+          page="Products"
+          title="Products Management"
+          desc="Manage your inventory"
+        />
+
+        <Button
+          label="+ Add Product"
+          onClick={() => navigate("/create-product")}
+        />
+      </div>
+
+      <div className="flex flex-col gap-6 rounded-2xl border border-gray-200 bg-white p-6 shadow-sm lg:flex-row lg:items-center lg:justify-between">
+        <div>
+          <p className="text-sm font-medium uppercase tracking-wide text-gray-500">
+            Total Products
+          </p>
+
+          <h2 className="mt-2 text-5xl font-bold text-green-800">
+            {products.length}
+          </h2>
+        </div>
+
+        <div className="w-full lg:w-96">
+          <input
+            type="text"
+            placeholder="🔍 Search products..."
+            value={search}
+            onChange={(e) => {
+              setSearch(e.target.value);
+              setCurrentPage(1);
+            }}
+            className="w-full rounded-xl border border-gray-300 px-5 py-3 text-lg transition focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-200"
+          />
+        </div>
+      </div>
+
+
+      <div className="grid grid-cols-1 gap-8 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
+        {currentProducts.map((product) => (
+          <ProductCard key={product._id || product.id} product={product} />
+        ))}
+      </div>
+
+      {currentProducts.length === 0 && (
+        <div className="rounded-xl border border-dashed border-gray-300 py-16 text-center text-lg text-gray-500">
+          No products found.
+        </div>
+      )}
+      {totalPages > 1 && (
+        <div className="flex justify-center pt-4">
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={setCurrentPage}
+          />
+        </div>
+      )}
+    </section>
+  );
 };
-
 
 export default ProductManagement;
