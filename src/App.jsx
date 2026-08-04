@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-
+import Landing from "./pages/Landing";
 import CreateProduct from "./pages/CreateProduct";
 import Home from "./pages/Home";
 import ProductPage from "./pages/ProductPage";
@@ -17,9 +17,9 @@ function App() {
         <Route
           path="/edit-product/:id"
           element={<EditProduct />}
-      />
+        />
         <Route element={<Layout />}>
-          
+          <Route path="/" element={<Landing />} />
           <Route path="/" element={<Home />} />
 
           <Route 

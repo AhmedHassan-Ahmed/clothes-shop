@@ -24,6 +24,8 @@ const ProductDetails = () => {
 
   const colors = ["#111827", "#065f46", "#4338CA", "#991B1B"];
 
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+
   const sizes = ["XS", "S", "M", "L"];
 
   const [selectedColor, setSelectedColor] = useState(colors[1]);
@@ -74,6 +76,7 @@ const ProductDetails = () => {
 const handleDelete = async () => {
   try {
     await api.delete(`/products/${id}`);
+    setShowDeleteModal(false);
     navigate("/products");
   } catch (error) {
     console.log(error);
@@ -105,8 +108,8 @@ const handleDelete = async () => {
             Edit Product
           </button>
 
-          <button 
-            onClick={handleDelete}
+          <button
+            onClick={() => setShowDeleteModal(true)}
             className="border rounded-lg p-2 hover:bg-red-50"
           >
             <Trash2 className="text-red-500" size={18} />
@@ -403,6 +406,36 @@ const handleDelete = async () => {
           </div>
         </div>
       </div>
+      {showDeleteModal && (
+  <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
+    <div className="bg-white rounded-xl p-6 w-[400px] shadow-xl">
+      <h2 className="text-2xl font-bold mb-3 text-red-600">
+        Delete Product
+      </h2>
+
+      <p className="text-gray-600">
+        Are you sure you want to delete
+        <span className="font-semibold"> {product.name}</span>?
+      </p>
+
+      <div className="flex justify-end gap-3 mt-6">
+        <button
+          onClick={() => setShowDeleteModal(false)}
+          className="px-4 py-2 border rounded-lg hover:bg-gray-100"
+        >
+          Cancel
+        </button>
+
+        <button
+          onClick={handleDelete}
+          className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700"
+        >
+          Delete
+        </button>
+      </div>
+    </div>
+  </div>
+)}
     </div>
   );
 };

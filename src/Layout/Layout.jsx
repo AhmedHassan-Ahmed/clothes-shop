@@ -8,7 +8,7 @@ const Layout = () => {
       <Navbar />
         <div className="flex">
           <Sidebar />
-          <main className="flex-1 px-5 py-8 overflow-x-hidden">
+          <main className="flex-1 lg:ml-64 pt-24 px-6">
             <Outlet />
           </main>
         </div>

@@ -3,14 +3,20 @@ import { useParams } from "react-router-dom";
 import api from "../services/api";
 import Input from "../components/Input";
 import Buttons from "../components/Button";
+import { useNavigate } from "react-router-dom";
 
 const EditProduct = () => {
+
+    const navigate = useNavigate();
 
     const { id } = useParams();
 
     const [product, setProduct] = useState({
-        title: "",
+        name: "",
+        category: "",
         price: "",
+        stock: "",
+        description: "",
         image: ""
     });
 
@@ -30,11 +36,13 @@ const EditProduct = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        await api.put(
-            `/products/${id}`,
-            product
-        );
-        alert("Product Updated");
+        try {
+            await api.put(`/products/${id}`, product);
+            navigate(`/product/${id}`);
+        } catch (error) {
+            console.log(error);
+            alert("Something went wrong");
+        }
     };
 
     return (
@@ -47,9 +55,9 @@ const EditProduct = () => {
                 className="space-y-4"
             >
                 <Input
-                    name="title"
+                    name="name"
                     placeholder="Product Name"
-                    value={product.title}
+                    value={product.name}
                     onChange={handleChange}
                 />
                 <Input
@@ -60,11 +68,34 @@ const EditProduct = () => {
                     onChange={handleChange}
                 />
                 <Input
+                    name="category"
+                    placeholder="Category"
+                    value={product.category}
+                    onChange={handleChange}
+                />
+
+                <Input
+                    name="stock"
+                    type="number"
+                    placeholder="Stock"
+                    value={product.stock}
+                    onChange={handleChange}
+                />
+
+                <Input
+                    name="description"
+                    placeholder="Description"
+                    value={product.description}
+                    onChange={handleChange}
+                />
+
+                <Input
                     name="image"
                     placeholder="Image URL"
                     value={product.image}
                     onChange={handleChange}
                 />
+                
                 <Buttons
                     label="Update Product"
                     type="submit"

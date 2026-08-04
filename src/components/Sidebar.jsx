@@ -20,9 +20,10 @@ function Sidebar() {
             )}
 
             <aside
-                className={`fixed top-0 left-0 min-h-screen w-64 bg-white overflow-y-auto text-black p-4 shadow z-50 transform transition-transform duration-300
+                className={`fixed top-0 left-0 h-screen w-64 bg-white border-r shadow
+                overflow-y-auto z-50 transform transition-transform duration-300
                 ${open ? "translate-x-0" : "-translate-x-full"}
-                lg:translate-x-0 lg:static`}
+                lg:translate-x-0`}
             >
                 <button
                     onClick={() => setOpen(false)}
