@@ -1,60 +1,78 @@
 import { NavLink } from "react-router-dom";
-import { House, Package, PlusCircle, ChevronRight, X } from "lucide-react";
-import { useState } from "react";
+import { House, Package, PlusCircle } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 
-function Sidebar() {
-    const [open, setOpen] = useState(false);
+const links = [
+  { name: "Home", path: "/", icon: House },
+  { name: "Products", path: "/products", icon: Package },
+  { name: "Add Product", path: "/create-product", icon: PlusCircle },
+];
 
-    return (
+function Sidebar({ open, setOpen }) {
+  return (
+    <AnimatePresence>
+      {open && (
         <>
-            <button
-                onClick={() => setOpen(true)}
-                className="fixed bottom-5 left-3 z-50 lg:hidden bg-green-800 text-white p-2 rounded-full shadow"            >
-                <ChevronRight size={20} />
-            </button>
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 0.4 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.25 }}
+            onClick={() => setOpen(false)}
+            className="fixed inset-0 z-40 bg-black lg:hidden"
+          />
 
-            {open && (
-                <div
+          <motion.aside
+            onClick={(e) => e.stopPropagation()}
+            initial={{ x: -300 }}
+            animate={{ x: 0 }}
+            exit={{ x: -300 }}
+            transition={{
+              type: "spring",
+              stiffness: 280,
+              damping: 28,
+            }}
+            className="fixed left-0 top-0 z-50 flex h-screen w-72 flex-col border-r bg-gray-50 shadow-xl"
+          >
+            <div className="flex items-center justify-between border-b px-6 py-6">
+              <h1 className="text-2xl font-bold text-green-800">
+                Clothes Shop
+              </h1>
+            </div>
+
+            <nav className="flex-1 space-y-2 p-4">
+              {links.map((link) => {
+                const Icon = link.icon;
+
+                return (
+                  <NavLink
+                    key={link.path}
+                    to={link.path}
+                    end={link.path === "/"}
                     onClick={() => setOpen(false)}
-                    className="fixed inset-0 bg-black bg-opacity-40 z-40 lg:hidden" />
-            )}
+                    className={({ isActive }) =>
+                      `flex items-center gap-3 rounded-xl px-4 py-3 font-medium transition ${
+                        isActive
+                          ? "bg-green-800 text-white"
+                          : "text-gray-700 hover:bg-green-100 hover:text-green-800"
+                      }`
+                    }
+                  >
+                    <Icon size={20} />
+                    {link.name}
+                  </NavLink>
+                );
+              })}
+            </nav>
 
-            <aside
-                className={`fixed top-0 left-0 h-screen w-64 bg-white border-r shadow
-                overflow-y-auto z-50 transform transition-transform duration-300
-                ${open ? "translate-x-0" : "-translate-x-full"}
-                lg:translate-x-0`}
-            >
-                <button
-                    onClick={() => setOpen(false)}
-                    className="lg:hidden mb-4"
-                >
-                    <X />
-                </button>
-
-                <h2 className="text-2xl font-bold mb-8 mt-5 text-green-800">
-                    Clothes Shop
-                </h2>
-
-                <nav className="flex flex-col gap-3">
-                    <NavLink to="/" className="flex items-center gap-3 p-3 rounded-lg hover:bg-green-800 hover:text-white">
-                        <House size={18} />
-                        Home
-                    </NavLink>
-
-                    <NavLink to="/products" className="flex items-center gap-3 p-3 rounded-lg hover:bg-green-800 hover:text-white">
-                        <Package size={18} />
-                        Products
-                    </NavLink>
-
-                    <NavLink to="/create-product" className="flex items-center gap-3 p-3 rounded-lg hover:bg-green-800 hover:text-white">
-                        <PlusCircle size={18} />
-                        Add Product
-                    </NavLink>
-                </nav>
-            </aside>
+            <div className="border-t p-5 text-center text-sm text-gray-500">
+              © 2026 Clothes Shop
+            </div>
+          </motion.aside>
         </>
-    );
+      )}
+    </AnimatePresence>
+  );
 }
 
 export default Sidebar;

@@ -2,69 +2,99 @@ import { FiBell, FiUser, FiMenu, FiX, FiShoppingBag } from "react-icons/fi";
 import { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 
-function Navbar() {
-    const [open, setOpen] = useState(false);
-    const navigate = useNavigate();
-    return (
-        <div className="fixed top-0 left-0 w-full bg-white border-b shadow z-50 px-6 py-5">
+const links = [
+  { name: "Home", path: "/" },
+  { name: "Products", path: "/products" },
+  { name: "Add Product", path: "/create-product" },
+  { name: "Collections", path: "/collections" },
+  { name: "Categories", path: "/categories" },
+  { name: "About", path: "/about" },
+  { name: "Contact", path: "/contact" },
+];
 
-            <div className="flex justify-between items-center">
+function Navbar({ sidebarOpen, setSidebarOpen }) {
+  const [open, setOpen] = useState(false);
+  const navigate = useNavigate();
 
-                <NavLink
-                to="/"
-                className="text-2xl font-archivo font-bold text-green-700 tracking-wide"
-                >
-                Clothes Shop
-                </NavLink>
+  return (
+    <header className="fixed top-0 left-0 z-50 w-full border-b bg-white shadow-sm">
+      <div className="mx-auto flex h-20 items-center justify-between px-20">
+        <NavLink
+          to="/"
+          className="text-2xl font-bold tracking-wide text-green-700"
+        >
+          Clothes Shop
+        </NavLink>
+        <nav className="hidden items-center gap-8 md:flex">
+          {links.map((link) => (
+            <NavLink
+              key={link.path}
+              to={link.path}
+              end={link.path === "/"}
+              className={({ isActive }) =>
+                `font-medium transition ${
+                  isActive
+                    ? "text-green-700"
+                    : "text-gray-600 hover:text-green-700"
+                }`
+              }
+            >
+              {link.name}
+            </NavLink>
+          ))}
+        </nav>
 
-                <div className="hidden md:flex gap-6 text-gray-800 transition-all duration-500">
-                    <span className="cursor-pointer hover:text-green-700 transition">Home</span>
-                    <span className="cursor-pointer hover:text-green-700 transition">Dashboard</span>
-                    <span className="cursor-pointer hover:text-green-700 transition">Products</span>
-                    <span className="cursor-pointer hover:text-green-700 transition">Orders</span>
-                    <span className="cursor-pointer hover:text-green-700 transition">Collection</span>
-                    <span className="cursor-pointer hover:text-green-700 transition">Categories</span>
-                    <span className="cursor-pointer hover:text-green-700 transition">About</span>
-                    <span className="cursor-pointer hover:text-green-700 transition">Contact</span>
-                </div>
+        <div className="hidden items-center gap-4 md:flex">
+          <FiBell className="cursor-pointer text-xl text-gray-600 hover:text-green-700" />
 
-                <div className="hidden md:flex items-center gap-4">
-                    <button className="border border-green-700 text-green-700 px-5 py-2 rounded-full hover:bg-green-700 hover:text-white duration-300">
-                        Login
-                    </button>
-                    <button 
-                    onClick={() => navigate("/products")}
-                    className="bg-green-700 text-white px-5 py-2 rounded-full flex items-center gap-2 hover:bg-green-800 duration-300">
-                        <FiShoppingBag />
-                        Shop Now
-                    </button>
-                </div>
+          <FiUser className="cursor-pointer text-xl text-gray-600 hover:text-green-700" />
 
-                <div className="flex items-center gap-4 text-lg">
-
-                    <FiBell className="cursor-pointer hover:scale-110" />
-                    <FiUser className="cursor-pointer hover:scale-110" />
-
-                    <div className="md:hidden cursor-pointer" onClick={() => setOpen(!open)}>
-                        {open ? <FiX /> : <FiMenu />}
-                    </div>
-                </div>
-            </div>
-
-            {open && (
-                <div className="flex flex-col mt-4 gap-3 text-gray-800 md:hidden">
-                    <span className="cursor-pointer hover:text-green-700 transition">Home</span>
-                    <span className="cursor-pointer hover:text-green-700 transition">Dashboard</span>
-                    <span className="cursor-pointer hover:text-green-700 transition">Products</span>
-                    <span className="cursor-pointer hover:text-green-700 transition">Orders</span>
-                    <span className="cursor-pointer hover:text-green-700 transition">Collection</span>
-                    <span className="cursor-pointer hover:text-green-700 transition">Categories</span>
-                    <span className="cursor-pointer hover:text-green-700 transition">About</span>
-                    <span className="cursor-pointer hover:text-green-700 transition">Contact</span>
-                </div>
-            )}
+          <button
+            onClick={() => navigate("/products")}
+            className="flex items-center gap-2 rounded-full bg-green-700 px-5 py-2 text-white transition hover:bg-green-800"
+          >
+            <FiShoppingBag />
+            Shop Now
+          </button>
         </div>
-    );
+
+        <button onClick={() => setOpen(!open)} className="text-2xl md:hidden">
+          {open ? <FiX /> : <FiMenu />}
+        </button>
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            setSidebarOpen((pr) => !pr);
+          }}
+          className="text-2xl hidden md:block"
+        >
+          {sidebarOpen ? <FiX /> : <FiMenu />}
+        </button>
+      </div>
+
+      {open && (
+        <nav className="border-t bg-white md:hidden">
+          {links.map((link) => (
+            <NavLink
+              key={link.path}
+              to={link.path}
+              end={link.path === "/"}
+              onClick={() => setOpen(false)}
+              className={({ isActive }) =>
+                `block px-6 py-4 transition ${
+                  isActive
+                    ? "bg-green-700 text-white"
+                    : "text-gray-700 hover:bg-green-100 hover:text-green-700"
+                }`
+              }
+            >
+              {link.name}
+            </NavLink>
+          ))}
+        </nav>
+      )}
+    </header>
+  );
 }
 
 export default Navbar;

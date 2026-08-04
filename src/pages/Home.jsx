@@ -1,7 +1,7 @@
 import ProductCard from "../components/ProductCard";
 import Loader from "../components/Loader";
 import ErrorBanner from "../components/ErrorBanner";
-import { useProductContext } from "../context/ProductContext";
+import { useProductContext } from "../context/useProductContext";
 
 const Home = () => {
 
